@@ -13,7 +13,7 @@ func main(){
 
 	//Ejercicio 2 avg
 
-
+	fmt.Printf(`elpromedio de las notas es %d`,avgSalary(1,5,4,4,3,5,3,2,2,4,5))
 
 }
 
@@ -42,12 +42,12 @@ func taxSalary(employees map[string]float64){
 
 
 func avgSalary(califications ...int) int{
-
-	for int i  = 0 ; i < califications; i++ {
-
+	sum := 0
+	q := len(califications)
+	avg := 0
+	for  i := 0 ; i < q; i++ {
+		sum += califications[i]
 	}
-
-
-
-return 0.0
+	 avg = sum/q
+		return avg
 }
