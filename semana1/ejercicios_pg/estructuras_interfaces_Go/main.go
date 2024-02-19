@@ -12,9 +12,8 @@ type Alumno struct{
 }
 
 
-
 func (a Alumno) Detalle(){
-	
+
 	fmt.Printf("\nDetalle del alumno:\n")
 	fmt.Printf("\nNombre: %s \nApellido %s \nDNI: %v \nFecha: %s", a.nombre,a.apellido,a.dni,a.fecha)
 }
