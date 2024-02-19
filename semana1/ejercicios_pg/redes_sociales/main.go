@@ -22,6 +22,8 @@ func main() {
 
 	fmt.Printf("\nMostrar todos los usuarios\n")
 
+	Users = append(Users, usuario);
+
 	u := UserT{}
     u.GetAll()
 	
