@@ -61,7 +61,6 @@ func main(){
 	p2 := Product{5,"mantequilla",5000,"uso industrial","supermercado"}
 	p2.Save()
 
-
 	fmt.Printf("\nMostrar todos los productos con nuevo agregado\n")
 	p.GetAll();
 	
