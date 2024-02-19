@@ -5,9 +5,6 @@ import (
 )
 
 
-
-
-
 func main(){
 
 	categoria,salario := calculateSalary("a",1560);
