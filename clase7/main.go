@@ -2,14 +2,17 @@ package main
 
 import (
 	"fmt"
-"time"
+	"time"
 )
 func main() {
+
+	devolucion := make(chan string)
+	prestamo := make(chan string)
 
 	go func() {
 		for {
 			time.Sleep(time.Second)
-			fmt.Println("devolución procesada")
+			devolucion <- "devolución procesada"
 		}
 
 	}()
@@ -17,9 +20,31 @@ func main() {
 	go func() {
 		for {
 			time.Sleep(time.Second / 2)
-			fmt.Println("prestamo procesado")
+			prestamo <- "prestamo procesado"
 		}
 	}()
+
+
+	go func() {
+		for devProcesada := range devolucion {
+			fmt.Println(devProcesada);
+		}
+	
+	}()
+
+	go func() {
+		for presProcesado := range prestamo {
+			fmt.Println(presProcesado);
+		}
+	
+	}()
+
+
+	// otra forma
+	select {
+	case msg := <- devolucion:
+		fmt.Println(msg)
+	}
 
 	fmt.Scanln()
 
