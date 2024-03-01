@@ -7,6 +7,8 @@ import (
 
 func main(){
 
+	//Ejercicio 1 - calcular salario
+
 	categoria,salario := calculateSalary("a",1560);
 	fmt.Printf(`El salario para el empleado de categoria %s es de %f`,categoria,salario);
 

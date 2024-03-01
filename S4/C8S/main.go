@@ -48,7 +48,6 @@ func main() {
 	bootcampGO.saveAlumni(alm3)
 
 
-
 	fmt.Print(bootcampGO);
 
 }

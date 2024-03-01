@@ -7,7 +7,7 @@ import (
 
 func main(){
 
-	//Ejercicio 1
+	//Ejercicio 1 Listado de nombres
 	
 	students := []string {"Benajamin","Nahuel","Brenda","Marcos","Pedro","Axel","Alez","Dolores","Federico","Hernan","Leandro","Eduardo","Duvrashka"};
 
@@ -16,7 +16,7 @@ func main(){
  	fmt.Println(students);
 
 
-	//Ejercicio 2
+	//Ejercicio 2 - que edad tiene
 
 	var employees = map[string]int{"Benjamin": 20, "Nahuel": 26, "Brenda": 19, "Darío": 44, "Pedro": 30}
 	

@@ -7,11 +7,11 @@ import (
 
 func main(){
 
-	//Ejercicio 1 salary tax
+	//Ejercicio 1 impuestos de salario
 	var employees =  map[string]float64{"a":50000,"b":26000,"c":45000,"d":250000};
 	taxSalary(employees);
 
-	//Ejercicio 2 avg
+	//Ejercicio 2 calcular promedio
 
 	fmt.Printf(`elpromedio de las notas es %d`,avgSalary(1,5,4,4,3,5,3,2,2,4,5))
 
@@ -39,6 +39,7 @@ func taxSalary(employees map[string]float64){
 
 }
 
+// ejercicio 2
 
 
 func avgSalary(califications ...int) int{
