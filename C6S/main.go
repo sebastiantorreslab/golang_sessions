@@ -85,6 +85,7 @@ func createFile() (*os.File, error) {
 	defer file.Close()
 
 	writer := csv.NewWriter(file)
+	defer writer.Flush()
 	var cat1 = Category{}
 
 	var id = 0
@@ -92,9 +93,9 @@ func createFile() (*os.File, error) {
 		id++
 		cat1.id = id
 		cat1.name = categoryList[i]
-		writer.Write(strings.Split(strconv.Itoa(cat1.id)+"\t\t"+cat1.name+"\t\t", "\n"))
+		writer.Write(strings.Split(strconv.Itoa(cat1.id)+","+cat1.name+",", ";"))
+
 	}
 
-	
 	return file, nil
 }
