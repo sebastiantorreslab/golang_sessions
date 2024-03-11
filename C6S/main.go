@@ -92,9 +92,9 @@ func createFile() (*os.File, error) {
 		id++
 		cat1.id = id
 		cat1.name = categoryList[i]
+		writer.Write(strings.Split(strconv.Itoa(cat1.id)+"\t\t"+cat1.name+"\t\t", "\n"))
 	}
 
-	writer.Write(strings.Split(strconv.Itoa(cat1.id)+"\t\t"+cat1.name+"\t\t", ";"))
-
+	
 	return file, nil
 }
