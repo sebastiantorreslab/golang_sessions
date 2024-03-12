@@ -53,17 +53,13 @@ func main() {
 	}
 
 	c := getCategoryByName("Herramientas")
-	if c != nil {
-		c.assingProducts(productos)
-	}
+	c.assingProducts(productos)
+
 	c1 := getCategoryByName("Automotor")
-	if c1 != nil {
-		c1.assingProducts(productos)
-	}
+	c1.assingProducts(productos)
+
 	c2 := getCategoryByName("Muebles")
-	if c2 != nil {
-		c2.assingProducts(productos)
-	}
+	c2.assingProducts(productos)
 
 	fmt.Println("--------ver categories-------")
 	fmt.Println(c)
@@ -71,10 +67,17 @@ func main() {
 	fmt.Println(c1)
 	fmt.Println()
 	fmt.Println(c2)
+	fmt.Println()
+	fmt.Println()
+	fmt.Println()
 
 	fmt.Println("--------ver inventories actualizados-------")
+	fmt.Println()
+	fmt.Println()
 
-	updateInventories(*c, *c1, *c2)
+	updateInventories(c, c1, c2)
+
+	fmt.Println()
 	fmt.Println()
 
 }
@@ -116,16 +119,16 @@ func (c *Category) assingProducts(products []Product) {
 
 }
 
-func getCategoryByName(category string) *Category {
+func getCategoryByName(category string) Category {
 	if category != "" {
 		for _, c := range inventories {
 			if strings.ToLower(c.name) == strings.ToLower(category) {
-				return &c
+				return c
 			}
 		}
 	}
 
-	return nil
+	return Category{}
 
 }
 
@@ -157,18 +160,9 @@ func createFile() (*os.File, error) {
 }
 
 func updateInventories(categories ...Category) {
-	for _, category := range categories {
-		for _, inv := range inventories {
-			if category.name == inv.name {
-				inv.products = category.products
 
-			}
-
-		}
-
-	}
-
-	fmt.Printf("inventarios %v", inventories)
+	inventories = categories
+	fmt.Println(inventories)
 
 }
 
