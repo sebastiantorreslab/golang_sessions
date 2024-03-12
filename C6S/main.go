@@ -171,3 +171,7 @@ func updateInventories(categories ...Category) {
 	fmt.Printf("inventarios %v", inventories)
 
 }
+
+func createEstimaciones() {
+
+}
