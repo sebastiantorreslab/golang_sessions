@@ -47,7 +47,7 @@ func main() {
 	var productos []Product = []Product{
 		{1, "Producto 1", 10.99, 5, "Muebles"},
 		{2, "Producto 2", 20.99, 3, "Automotor"},
-		{3, "Producto 3", 30.99, 2, "Herramientas"},
+		{3, "Producto 3", 30.99, 2, "Pinturas"},
 		{4, "Producto 4", 50.99, 3, "Herramientas"},
 		{5, "Producto 5", 12.99, 6, "Herramientas"},
 	}
@@ -60,6 +60,9 @@ func main() {
 
 	c2 := getCategoryByName("Muebles")
 	c2.assingProducts(productos)
+
+	c3 := getCategoryByName("Pinturas")
+	c3.assingProducts(productos)
 
 	fmt.Println("--------ver categories-------")
 	fmt.Println(c)
@@ -75,10 +78,12 @@ func main() {
 	fmt.Println()
 	fmt.Println()
 
-	updateInventories(c, c1, c2)
+	updateInventories(c, c1, c2, c3)
 
 	fmt.Println()
 	fmt.Println()
+
+	createEstimaciones()
 
 }
 
@@ -160,12 +165,56 @@ func createFile() (*os.File, error) {
 }
 
 func updateInventories(categories ...Category) {
-
 	inventories = categories
 	fmt.Println(inventories)
 
 }
 
-func createEstimaciones() {
+func createEstimaciones() *os.File {
+	var price float64
+	var cant int
+	var sum float64
+	var total float64
+
+	data := make(map[string]float64)
+
+	estimaciones, err := os.Create("estimaciones.csv")
+	if err != nil {
+		fmt.Println("Error creating the file ")
+	}
+	defer estimaciones.Close()
+
+	writer := csv.NewWriter(estimaciones)
+	defer writer.Flush()
+
+	err = writer.Write([]string{"Categoria","Estimativo por categoria"})
+	if err != nil {
+		fmt.Println("Error:", err)
+	}
+
+	for _, inv := range inventories {
+		for _, value := range inv.products {
+			price = value.currentPrice
+			cant = value.currentQunatity
+			sum = price * float64(cant)
+		}
+
+		data[inv.name] = sum
+
+		total += sum
+	}
+
+	for clave, valor := range data {
+		err := writer.Write([]string{clave, fmt.Sprintf("%v", valor)})
+		if err != nil {
+			fmt.Println("Error:", err)
+		}
+	}
+	err = writer.Write([]string{"Total", fmt.Sprintf("%v", total)})
+	if err != nil {
+		fmt.Println("Error:", err)
+	}
+
+	return estimaciones
 
 }
