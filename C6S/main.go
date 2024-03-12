@@ -187,7 +187,7 @@ func createEstimaciones() *os.File {
 	writer := csv.NewWriter(estimaciones)
 	defer writer.Flush()
 
-	err = writer.Write([]string{"Categoria","Estimativo por categoria"})
+	err = writer.Write([]string{"Categoria", "Estimativo por categoria"})
 	if err != nil {
 		fmt.Println("Error:", err)
 	}
