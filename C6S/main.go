@@ -20,11 +20,12 @@ func main() {
 
 	category, err := createFile()
 	if err != nil {
+		fmt.Println("Error creando archivo:", err)
 		return
 	}
 	fmt.Println("Archivo creado:", category)
 
-	category1, err := os.Open("./categories.csv")
+	/* category1, err := os.Open("./categories.csv")
 	if err != nil {
 		fmt.Println("Error al abrir el archivo CSV:", err)
 		return
@@ -38,10 +39,43 @@ func main() {
 	for {
 		linea, err := lector.Read()
 		if err != nil {
-			break // Se ha alcanzado el final del archivo
+			break
 		}
 		fmt.Println(linea)
+	} */
+
+	var productos []Product = []Product{
+		{1, "Producto 1", 10.99, 5, "Muebles"},
+		{2, "Producto 2", 20.99, 3, "Automotor"},
+		{3, "Producto 3", 30.99, 2, "Herramientas"},
+		{4, "Producto 4", 50.99, 3, "Herramientas"},
+		{5, "Producto 5", 12.99, 6, "Herramientas"},
 	}
+
+	c := getCategoryByName("Herramientas")
+	if c != nil {
+		c.assingProducts(productos)
+	}
+	c1 := getCategoryByName("Automotor")
+	if c1 != nil {
+		c1.assingProducts(productos)
+	}
+	c2 := getCategoryByName("Muebles")
+	if c2 != nil {
+		c2.assingProducts(productos)
+	}
+
+	fmt.Println("--------ver categories-------")
+	fmt.Println(c)
+	fmt.Println()
+	fmt.Println(c1)
+	fmt.Println()
+	fmt.Println(c2)
+
+	fmt.Println("--------ver inventories actualizados-------")
+
+	updateInventories(*c, *c1, *c2)
+	fmt.Println()
 
 }
 
@@ -59,21 +93,40 @@ type Category struct {
 	products []Product
 }
 
-var categoryList []string = []string{
-	"Electrodomésticos",
-	"Muebles",
-	"Herramientas",
-	"Pinturas",
-	"Aberturas",
-	"Construcción",
-	"Automotor",
+var categoryList []Category = []Category{
+	{0, "Electrodomésticos", []Product{}},
+	{0, "Muebles", []Product{}},
+	{0, "Herramientas", []Product{}},
+	{0, "Pinturas", []Product{}},
+	{0, "Aberturas", []Product{}},
+	{0, "Construcción", []Product{}},
+	{0, "Automotor", []Product{}},
 }
 
-var productos []Product = []Product{
-	{1, "Producto 1", 10.99, 5, "Muebles"},
-	{2, "Producto 2", 20.99, 3, "Automoviles"},
-	{3, "Producto 3", 30.99, 2, "Herramientas"},
-	{4, "Producto 3", 50.99, 3, "Herramientas"},
+var inventories []Category
+
+func (c *Category) assingProducts(products []Product) {
+
+	for i := 0; i < len(products); i++ {
+		pCategory := products[i].category
+		if c.name == pCategory {
+			c.products = append(c.products, products[i])
+		}
+	}
+
+}
+
+func getCategoryByName(category string) *Category {
+	if category != "" {
+		for _, c := range inventories {
+			if strings.ToLower(c.name) == strings.ToLower(category) {
+				return &c
+			}
+		}
+	}
+
+	return nil
+
 }
 
 func createFile() (*os.File, error) {
@@ -86,16 +139,35 @@ func createFile() (*os.File, error) {
 
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
-	var cat1 = Category{}
+
+	var cat Category
 
 	var id = 0
 	for i := 0; i < len(categoryList); i++ {
+
 		id++
-		cat1.id = id
-		cat1.name = categoryList[i]
-		writer.Write(strings.Split(strconv.Itoa(cat1.id)+","+cat1.name+",", ";"))
+		cat.id = id
+		cat.name = categoryList[i].name
+
+		inventories = append(inventories, cat)
+		writer.Write(strings.Split(strconv.Itoa(cat.id)+","+cat.name+",", "\n"))
+
+	}
+	return file, nil
+}
+
+func updateInventories(categories ...Category) {
+	for _, category := range categories {
+		for _, inv := range inventories {
+			if category.name == inv.name {
+				inv.products = category.products
+
+			}
+
+		}
 
 	}
 
-	return file, nil
+	fmt.Printf("inventarios %v", inventories)
+
 }
